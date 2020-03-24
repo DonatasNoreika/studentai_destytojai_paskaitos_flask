@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if destytojai %}
+{% for destytojas in destytojai %}
+<hr>
+<p>{{destytojas.vardas}}</p>
+<p>{{destytojas.pavarde}}</p>
+{% endfor %}
+{% endif %}
+<hr>
+<p><a href="{{ url_for('naujas_destytojas')}}">Naujas dėstytojas</a></p>
+
+{% endblock %}
