@@ -145,7 +145,7 @@ def redaguoti_studenta(id):
     if forma.validate_on_submit():
         studentas.vardas = forma.vardas.data
         studentas.pavarde = forma.pavarde.data
-        studentas.tevai = []
+        studentas.paskaitos = []
         for paskaita in forma.paskaitos.data:
             priskirta_paskaita = Paskaita.query.get(paskaita.id)
             studentas.paskaitos.append(priskirta_paskaita)
