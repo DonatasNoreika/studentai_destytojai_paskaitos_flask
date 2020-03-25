@@ -153,6 +153,21 @@ def redaguoti_studenta(id):
         return redirect(url_for('studentai'))
     return render_template("redaguoti_studenta.html", form=forma, studentas=studentas)
 
+@app.route("/redaguoti_destytoja/<int:id>", methods=['GET', 'POST'])
+def redaguoti_destytoja(id):
+    forma = forms.DestytojasForm()
+    destytojas = Destytojas.query.get(id)
+    if forma.validate_on_submit():
+        destytojas.vardas = forma.vardas.data
+        destytojas.pavarde = forma.pavarde.data
+        destytojas.paskaitos = []
+        for paskaita in forma.paskaitos.data:
+            priskirta_paskaita = Paskaita.query.get(paskaita.id)
+            destytojas.paskaitos.append(priskirta_paskaita)
+        db.session.commit()
+        return redirect(url_for('destytojai'))
+    return render_template("redaguoti_destytoja.html", form=forma, destytojas=destytojas)
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8000, debug=True)
     db.create_all()
