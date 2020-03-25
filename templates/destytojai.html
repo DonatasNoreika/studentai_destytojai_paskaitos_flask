@@ -7,6 +7,12 @@
 <hr>
 <p>{{destytojas.vardas}}</p>
 <p>{{destytojas.pavarde}}</p>
+{% if destytojas.paskaitos %}
+<p><b>Paskaitos:</b></p>
+{% for paskaita in destytojas.paskaitos %}
+<p>{{paskaita.pavadinimas}}</p>
+{% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}
 <hr>

@@ -59,9 +59,9 @@ def naujas_destytojas():
     forma = forms.DestytojasForm()
     if forma.validate_on_submit():
         naujas_destytojas = Destytojas(vardas=forma.vardas.data, pavarde=forma.pavarde.data)
-        # for paskaita in forma.paskaitos.data:
-        #     priskirtas_vaikas = Vaikas.query.get(vaikas.id)
-        #     naujas_tevas.vaikai.append(priskirtas_vaikas)
+        for paskaita in forma.paskaitos.data:
+            priskirta_paskaita = Paskaita.query.get(paskaita.id)
+            naujas_destytojas.paskaitos.append(priskirta_paskaita)
         db.session.add(naujas_destytojas)
         db.session.commit()
         return redirect(url_for('destytojai'))
