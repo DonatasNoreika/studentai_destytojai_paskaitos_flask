@@ -20,6 +20,7 @@ class Studentas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vardas = db.Column("Vardas", db.String)
     pavarde = db.Column("Pavardė", db.String)
+    # Many2many
     paskaitos = db.relationship("Paskaita", secondary=association_table,
                           back_populates="studentai")
 
@@ -27,9 +28,11 @@ class Paskaita(db.Model):
     __tablename__ = 'paskaita'
     id = db.Column(db.Integer, primary_key=True)
     pavadinimas = db.Column("Pavadinimas", db.String)
+    # Many2many
     studentai = db.relationship("Studentas", secondary=association_table,
                          back_populates="paskaitos")
     destytojas_id = db.Column(db.Integer, db.ForeignKey("destytojas.id"))
+    # Many2one
     destytojas = db.relationship("Destytojas")
 
 class Destytojas(db.Model):
@@ -37,12 +40,13 @@ class Destytojas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vardas = db.Column("Vardas", db.String)
     pavarde = db.Column("Pavardė", db.String)
+    # One2many
     paskaitos = db.relationship("Paskaita")
 
 
 @app.route("/")
 def index():
-    return destytojai()
+    return paskaitos()
 
 @app.route("/destytojai")
 def destytojai():
