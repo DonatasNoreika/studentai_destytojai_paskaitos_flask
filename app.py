@@ -138,43 +138,20 @@ def istrinti_paskaita(id):
     return redirect(url_for('paskaitos'))
 
 
-#
-# @app.route("/update/<int:id>", methods=['GET', 'POST'])
-# def update(id):
-#     form = forms.TevasForm()
-#     tevas = Tevas.query.get(id)
-#     if form.validate_on_submit():
-#         tevas.vardas = form.vardas.data
-#         tevas.pavarde = form.pavarde.data
-#         tevas.vaikai.clear()
-#         for vaikas in form.vaikai.data:
-#             priskirtas_vaikas = Vaikas.query.get(vaikas.id)
-#             tevas.vaikai.append(priskirtas_vaikas)
-#         db.session.commit()
-#         return redirect(url_for('parents'))
-#     return render_template("tevas_update.html", form=form, tevas=tevas)
-#
-# @app.route("/vaikas_delete/<int:id>")
-# def vaikas_delete(id):
-#     uzklausa = Vaikas.query.get(id)
-#     db.session.delete(uzklausa)
-#     db.session.commit()
-#     return redirect(url_for('parents'))
-#
-# @app.route("/vaikas_update/<int:id>", methods=['GET', 'POST'])
-# def vaikas_update(id):
-#     form = forms.VaikasForm()
-#     vaikas = Vaikas.query.get(id)
-#     if form.validate_on_submit():
-#         vaikas.vardas = form.vardas.data
-#         vaikas.pavarde = form.pavarde.data
-#         vaikas.tevai = []
-#         for tevas in form.tevai.data:
-#             priskirtas_tevas = Tevas.query.get(tevas.id)
-#             tevas.vaikai.append(priskirtas_tevas)
-#         db.session.commit()
-#         return redirect(url_for('children'))
-#     return render_template("vaikas_update.html", form=form, vaikas=vaikas)
+@app.route("/redaguoti_studenta/<int:id>", methods=['GET', 'POST'])
+def redaguoti_studenta(id):
+    forma = forms.StudentasForm()
+    studentas = Studentas.query.get(id)
+    if forma.validate_on_submit():
+        studentas.vardas = forma.vardas.data
+        studentas.pavarde = forma.pavarde.data
+        studentas.tevai = []
+        for paskaita in forma.paskaitos.data:
+            priskirta_paskaita = Paskaita.query.get(paskaita.id)
+            studentas.paskaitos.append(priskirta_paskaita)
+        db.session.commit()
+        return redirect(url_for('studentai'))
+    return render_template("redaguoti_studenta.html", form=forma, studentas=studentas)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8000, debug=True)
