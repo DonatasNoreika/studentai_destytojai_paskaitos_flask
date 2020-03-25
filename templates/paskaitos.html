@@ -15,6 +15,7 @@
 <p>{{studentas.vardas}} {{studentas.pavarde}}</p>
 {% endfor %}
 {% endif %}
+<a href="{{ url_for('istrinti_paskaita', id=paskaita['id']) }}">Ištrinti</a>
 {% endfor %}
 {% endif %}
 <hr>

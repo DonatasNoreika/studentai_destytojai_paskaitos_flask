@@ -12,6 +12,7 @@
 <p>{{paskaita.pavadinimas}} </p>
 {% endfor %}
 {% endif %}
+<a href="{{ url_for('istrinti_studenta', id=studentas['id']) }}">Ištrinti</a>
 {% endfor %}
 {% endif %}
 <hr>

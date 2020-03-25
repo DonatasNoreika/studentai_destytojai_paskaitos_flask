@@ -116,12 +116,28 @@ def nauja_paskaita():
         return redirect(url_for('paskaitos'))
     return render_template("prideti_paskaita.html", form=forma)
 #
-# @app.route("/delete/<int:id>")
-# def delete(id):
-#     uzklausa = Tevas.query.get(id)
-#     db.session.delete(uzklausa)
-#     db.session.commit()
-#     return redirect(url_for('parents'))
+@app.route("/istrinti_studenta/<int:id>")
+def istrinti_studenta(id):
+    uzklausa = Studentas.query.get(id)
+    db.session.delete(uzklausa)
+    db.session.commit()
+    return redirect(url_for('studentai'))
+
+@app.route("/istrinti_destytoja/<int:id>")
+def istrinti_destytoja(id):
+    uzklausa = Destytojas.query.get(id)
+    db.session.delete(uzklausa)
+    db.session.commit()
+    return redirect(url_for('destytojai'))
+
+@app.route("/istrinti_paskaita/<int:id>")
+def istrinti_paskaita(id):
+    uzklausa = Paskaita.query.get(id)
+    db.session.delete(uzklausa)
+    db.session.commit()
+    return redirect(url_for('paskaitos'))
+
+
 #
 # @app.route("/update/<int:id>", methods=['GET', 'POST'])
 # def update(id):
