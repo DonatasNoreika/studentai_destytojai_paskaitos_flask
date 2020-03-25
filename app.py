@@ -4,10 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import forms
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-print(basedir)
-
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'dfgsfdgsdfgsdfgsdf'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'paskaitos.db?check_same_thread=False')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -110,7 +107,7 @@ def nauja_paskaita():
     db.create_all()
     forma = forms.PaskaitaForm()
     if forma.validate_on_submit():
-        nauja_paskaita = Paskaita(pavadinimas=forma.pavadinimas.data)
+        nauja_paskaita = Paskaita(pavadinimas=forma.pavadinimas.data, destytojas_id=forma.destytojas.data.id)
         for studentas in forma.studentai.data:
             priskirtas_studentas = Studentas.query.get(studentas.id)
             nauja_paskaita.studentai.append(priskirtas_studentas)
