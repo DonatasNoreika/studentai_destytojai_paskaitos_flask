@@ -94,20 +94,30 @@ def naujas_studentas():
         db.session.commit()
         return redirect(url_for('studentai'))
     return render_template("prideti_studenta.html", form=forma)
-#
-# @app.route("/naujas_tevas", methods=["GET", "POST"])
-# def new_parent():
-#     db.create_all()
-#     forma = forms.TevasForm()
-#     if forma.validate_on_submit():
-#         naujas_tevas = Tevas(vardas=forma.vardas.data, pavarde=forma.pavarde.data)
-#         for vaikas in forma.vaikai.data:
-#             priskirtas_vaikas = Vaikas.query.get(vaikas.id)
-#             naujas_tevas.vaikai.append(priskirtas_vaikas)
-#         db.session.add(naujas_tevas)
-#         db.session.commit()
-#         return redirect(url_for('parents'))
-#     return render_template("prideti_teva.html", form=forma)
+
+@app.route("/paskaitos")
+def paskaitos():
+    try:
+        visos_paskaitos = Paskaita.query.all()
+    except:
+        visos_paskaitos = []
+    return render_template("paskaitos.html", visos_paskaitos=visos_paskaitos)
+
+
+
+@app.route("/nauja_paskaita", methods=["GET", "POST"])
+def nauja_paskaita():
+    db.create_all()
+    forma = forms.PaskaitaForm()
+    if forma.validate_on_submit():
+        nauja_paskaita = Paskaita(pavadinimas=forma.pavadinimas.data)
+        # for vaikas in forma.vaikai.data:
+        #     priskirtas_vaikas = Vaikas.query.get(vaikas.id)
+        #     naujas_tevas.vaikai.append(priskirtas_vaikas)
+        db.session.add(nauja_paskaita)
+        db.session.commit()
+        return redirect(url_for('paskaitos'))
+    return render_template("prideti_paskaita.html", form=forma)
 #
 # @app.route("/delete/<int:id>")
 # def delete(id):
