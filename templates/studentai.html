@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if visi_studentai %}
+{% for studentas in visi_studentai %}
+<hr>
+<p>{{studentas.vardas}}</p>
+<p>{{studentas.pavarde}}</p>
+{% endfor %}
+{% endif %}
+<hr>
+<p><a href="{{ url_for('naujas_studentas')}}">Naujas studentas</a></p>
+
+{% endblock %}

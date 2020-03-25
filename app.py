@@ -9,7 +9,7 @@ print(basedir)
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'dfgsfdgsdfgsdfgsdf'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'many2many.db?check_same_thread=False')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'paskaitos.db?check_same_thread=False')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -71,29 +71,29 @@ def naujas_destytojas():
     return render_template("prideti_destytoja.html", form=forma)
 
 
-# @app.route("/vaikai")
-# def children():
-#     try:
-#         visi_vaikai = Vaikas.query.all()
-#     except:
-#         visi_vaikai = []
-#     return render_template("vaikai.html", visi_vaikai=visi_vaikai)
-#
-#
-# @app.route("/naujas_vaikas", methods=["GET", "POST"])
-# def new_child():
-#     db.create_all()
-#     forma = forms.VaikasForm()
-#     if forma.validate_on_submit():
-#         naujas_vaikas = Vaikas(vardas=forma.vardas.data,
-#                                pavarde=forma.pavarde.data)
-#         for tevas in forma.tevai.data:
-#             priskirtas_tevas = Tevas.query.get(tevas.id)
-#             naujas_vaikas.tevai.append(priskirtas_tevas)
-#         db.session.add(naujas_vaikas)
-#         db.session.commit()
-#         return redirect(url_for('children'))
-#     return render_template("prideti_vaika.html", form=forma)
+@app.route("/studentai")
+def studentai():
+    try:
+        visi_studentai = Studentas.query.all()
+    except:
+        visi_studentai = []
+    return render_template("studentai.html", visi_studentai=visi_studentai)
+
+
+@app.route("/naujas_studentas", methods=["GET", "POST"])
+def naujas_studentas():
+    db.create_all()
+    forma = forms.StudentasForm()
+    if forma.validate_on_submit():
+        naujas_studentas = Studentas(vardas=forma.vardas.data,
+                               pavarde=forma.pavarde.data)
+        # for tevas in forma.tevai.data:
+        #     priskirtas_tevas = Tevas.query.get(tevas.id)
+        #     naujas_studentas.tevai.append(priskirtas_tevas)
+        db.session.add(naujas_studentas)
+        db.session.commit()
+        return redirect(url_for('studentai'))
+    return render_template("prideti_studenta.html", form=forma)
 #
 # @app.route("/naujas_tevas", methods=["GET", "POST"])
 # def new_parent():
