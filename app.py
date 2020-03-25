@@ -40,6 +40,7 @@ class Destytojas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vardas = db.Column("Vardas", db.String)
     pavarde = db.Column("Pavardė", db.String)
+    vardas_ir_pavarde = db.Column("vardas_ir_pavarde", db.String)
     # One2many
     paskaitos = db.relationship("Paskaita")
 
@@ -62,7 +63,7 @@ def naujas_destytojas():
     db.create_all()
     forma = forms.DestytojasForm()
     if forma.validate_on_submit():
-        naujas_destytojas = Destytojas(vardas=forma.vardas.data, pavarde=forma.pavarde.data)
+        naujas_destytojas = Destytojas(vardas=forma.vardas.data, pavarde=forma.pavarde.data, vardas_ir_pavarde = f"{forma.vardas.data} {forma.pavarde.data}")
         for paskaita in forma.paskaitos.data:
             priskirta_paskaita = Paskaita.query.get(paskaita.id)
             naujas_destytojas.paskaitos.append(priskirta_paskaita)
@@ -164,6 +165,7 @@ def redaguoti_destytoja(id):
     if forma.validate_on_submit():
         destytojas.vardas = forma.vardas.data
         destytojas.pavarde = forma.pavarde.data
+        destytojas.vardas_ir_pavarde = f"{forma.vardas.data} {forma.pavarde.data}"
         destytojas.paskaitos = []
         for paskaita in forma.paskaitos.data:
             priskirta_paskaita = Paskaita.query.get(paskaita.id)
