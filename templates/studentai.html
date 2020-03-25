@@ -5,8 +5,13 @@
 {% if visi_studentai %}
 {% for studentas in visi_studentai %}
 <hr>
-<p>{{studentas.vardas}}</p>
-<p>{{studentas.pavarde}}</p>
+<p>{{studentas.vardas}} {{studentas.pavarde}}</p>
+{% if studentas.paskaitos %}
+<p>Paskaitos:</p>
+{% for paskaita in studentas.paskaitos %}
+<p>{{paskaita.pavadinimas}} </p>
+{% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}
 <hr>

@@ -87,9 +87,9 @@ def naujas_studentas():
     if forma.validate_on_submit():
         naujas_studentas = Studentas(vardas=forma.vardas.data,
                                pavarde=forma.pavarde.data)
-        # for tevas in forma.tevai.data:
-        #     priskirtas_tevas = Tevas.query.get(tevas.id)
-        #     naujas_studentas.tevai.append(priskirtas_tevas)
+        for paskaita in forma.paskaitos.data:
+            priskirta_paskaita = Paskaita.query.get(paskaita.id)
+            naujas_studentas.paskaitos.append(priskirta_paskaita)
         db.session.add(naujas_studentas)
         db.session.commit()
         return redirect(url_for('studentai'))
@@ -111,9 +111,9 @@ def nauja_paskaita():
     forma = forms.PaskaitaForm()
     if forma.validate_on_submit():
         nauja_paskaita = Paskaita(pavadinimas=forma.pavadinimas.data)
-        # for vaikas in forma.vaikai.data:
-        #     priskirtas_vaikas = Vaikas.query.get(vaikas.id)
-        #     naujas_tevas.vaikai.append(priskirtas_vaikas)
+        for studentas in forma.studentai.data:
+            priskirtas_studentas = Studentas.query.get(studentas.id)
+            nauja_paskaita.studentai.append(priskirtas_studentas)
         db.session.add(nauja_paskaita)
         db.session.commit()
         return redirect(url_for('paskaitos'))

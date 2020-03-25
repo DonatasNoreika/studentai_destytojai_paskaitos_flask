@@ -6,6 +6,12 @@
 {% for paskaita in visos_paskaitos %}
 <hr>
 <p>{{paskaita.pavadinimas}}</p>
+{% if paskaita.studentai %}
+<p>Studentai:</p>
+{% for studentas in paskaita.studentai %}
+<p>{{studentas.vardas}} {{studentas.pavarde}}</p>
+{% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}
 <hr>
