@@ -27,11 +27,13 @@ class Studentas(db.Model):
                           back_populates="studentai")
 
 class Paskaita(db.Model):
-    __tablename__ = 'vaikas'
+    __tablename__ = 'paskaita'
     id = db.Column(db.Integer, primary_key=True)
     pavadinimas = db.Column("Pavadinimas", db.String)
-    studentai = db.relationship("Studentai", secondary=association_table,
+    studentai = db.relationship("Studentas", secondary=association_table,
                          back_populates="paskaitos")
+    destytojas_id = db.Column(db.Integer, db.ForeignKey("destytojas.id"))
+    destytojas = db.relationship("Destytojas")
 
 class Destytojas(db.Model):
     __tablename__ = 'destytojas'
@@ -60,13 +62,13 @@ def naujas_destytojas():
     forma = forms.DestytojasForm()
     if forma.validate_on_submit():
         naujas_destytojas = Destytojas(vardas=forma.vardas.data, pavarde=forma.pavarde.data)
-        for paskaita in forma.paskaitos.data:
-            priskirtas_vaikas = Vaikas.query.get(vaikas.id)
-            naujas_tevas.vaikai.append(priskirtas_vaikas)
+        # for paskaita in forma.paskaitos.data:
+        #     priskirtas_vaikas = Vaikas.query.get(vaikas.id)
+        #     naujas_tevas.vaikai.append(priskirtas_vaikas)
         db.session.add(naujas_destytojas)
         db.session.commit()
-        return redirect(url_for('parents'))
-    return render_template("prideti_teva.html", form=forma)
+        return redirect(url_for('destytojai'))
+    return render_template("prideti_destytoja.html", form=forma)
 
 
 # @app.route("/vaikai")
