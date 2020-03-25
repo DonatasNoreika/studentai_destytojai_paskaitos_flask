@@ -16,6 +16,7 @@
 {% endfor %}
 {% endif %}
 <a href="{{ url_for('istrinti_paskaita', id=paskaita['id']) }}">Ištrinti</a>
+<a href="{{ url_for('redaguoti_paskaita', id=paskaita['id']) }}">Redaguoti</a>
 {% endfor %}
 {% endif %}
 <hr>
